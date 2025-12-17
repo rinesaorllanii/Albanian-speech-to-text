@@ -45,4 +45,3 @@ function validateEmail(email) {
         confirmPasswordInput.setCustomValidity('');
     }
 });
-

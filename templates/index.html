@@ -17,6 +17,11 @@
                 <li><a href="/register">Register</a></li>
             </ul>
         </nav>
+        {% if session.user_email %}
+            <div style="text-align: right; padding: 10px; color: white;">
+            Hi, {{ session.user_email }}!
+            </div>
+        {% endif %}
     </header>
     <main>
         <div id="hero">

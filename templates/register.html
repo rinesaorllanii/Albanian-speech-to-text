@@ -20,8 +20,8 @@
     </header>
     <main>
         <div class="container">
-            <h1>Login</h1>
-            <form method="POST" action="/register" class="form-group">
+             <h1>Register</h1>
+            <form method="POST" action="/create" class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
 
@@ -34,7 +34,14 @@
                 <label for="confirm password">Confirm Password:</label>
                 <input type="password" id="password" name="password" required>
     
-                <input type="submit" value="Login">
+                <label for="security_level">Security Level:</label>
+                <select id="security_level" name="security_level">
+                    <option value="LOW">LOW</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="HIGH">HIGH</option>
+                </select>
+
+                <input type="submit" value="Register">
     
                 <a href="/login">Already have an account? Log In here</a>
             </form>

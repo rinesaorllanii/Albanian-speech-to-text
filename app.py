@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+import psycopg2
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -21,6 +22,34 @@ def login():
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+def db_conn():
+    conn = psycopg2.connect(database="astt_db", host="localhost", user="postgres", password="postgres", port="5432")
+    return conn
+
+@app.route('/')
+def index():
+    conn = db_conn()
+    cur = conn.cursor()
+    cur.execute('''SELECT * FROM users''')
+    data = cur.fetchall();
+    cur.close();
+    conn.close();
+    return render_template('index.html', data = data)
+
+@app.route('/create', methods=['POST'])
+def createUser():
+    conn=db_conn()
+    cur=conn.cursor()
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+    level = request.form['security_level']
+    cur.execute('''INSERT INTO users (username, email, password, level) VALUES (%s, %s, %s, %s)''', (username, email, password, level))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,6 +1,8 @@
 import psycopg2
 from flask import Flask, render_template, request, redirect, url_for
 
+from components.user import User
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -39,17 +41,13 @@ def index():
 
 @app.route('/create', methods=['POST'])
 def createUser():
-    conn=db_conn()
-    cur=conn.cursor()
     username = request.form['username']
     email = request.form['email']
     password = request.form['password']
     level = request.form['security_level']
-    cur.execute('''INSERT INTO users (username, email, password, level) VALUES (%s, %s, %s, %s)''', (username, email, password, level))
-    conn.commit()
-    cur.close()
-    conn.close()
-    return redirect(url_for('index'))
+    user = User(username, email, password, level)
+    user.add_user()
+    return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

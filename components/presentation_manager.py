@@ -16,4 +16,4 @@ class PresentationManager:
         except requests.ConnectionError:
             pass
 
-        return Mode.OFFLINE   
+        return Mode.OFFLINE       

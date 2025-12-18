@@ -6,11 +6,20 @@ from messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from flask import flash
 from components.feedback import Feedback
+<<<<<<< HEAD
+from components.presentation_manager import PresentationManager
+from components.mode import Mode
+
+=======
 import speech_recognition as sr
 from flask import jsonify
+>>>>>>> 28f60b8492e28ed46fbccd067dd0c1adab2ed01c
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
+presentation_manager = PresentationManager()
+
+presentation_manager.start()
 
 @app.route('/')
 def home():
@@ -96,8 +105,7 @@ def login_user():
             session['user_email'] = email
             flash(LOGIN_SUCCESS, 'success')
 
-            # Redirect to the homepage or any desired route after successful login
-            return redirect(url_for('index'))
+            return render_template('index.html')
         
         flash(LOGIN_FAIL, 'error')
         # If login fails, you can render an error message or redirect back to the login page
@@ -324,4 +332,5 @@ def transcription():
 
  
 if __name__ == '__main__':
+    presentation_manager.modeManager()
     app.run(debug=True)

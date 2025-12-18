@@ -2,13 +2,14 @@ import psycopg2
 import secrets
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from passlib.hash import sha1_crypt
+from DAOs.feedbackDAO import FeedbackDAO
 from DAOs.userDAO import UserDao
+from components.dbconn import DbConn
+from components.presentation_manager import PresentationManager
 from components.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from components.feedback import Feedback
-from components.presentation_manager import PresentationManager
 import speech_recognition as sr
-
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -40,7 +41,7 @@ def register():
 def profile():
     if 'user_email' in session:
         email = session['user_email']
-        conn = db_conn()
+        conn = DbConn().connect()
         cur = conn.cursor()
         cur.execute("SELECT * FROM users WHERE email = %s", (email,))
         user_data = cur.fetchone()
@@ -52,10 +53,6 @@ def profile():
     
     flash('Please log in to access your profile.', 'error')
     return redirect(url_for('login'))
-
-def db_conn():
-    conn = psycopg2.connect(database="astt_db", host="localhost", user="postgres", password="postgres", port="5432")
-    return conn
 
 @app.route('/create', methods=['POST'])
 def createUser():
@@ -75,7 +72,7 @@ def createUser():
     return render_template('register.html')
 
 def validate_login(email, password):
-    conn = db_conn()
+    conn = DbConn().connect()
     cur = conn.cursor()
     cur.execute("SELECT * FROM users WHERE email = %s", (email,))
     user_data = cur.fetchone()
@@ -106,7 +103,7 @@ def login_user():
     return render_template('login.html')
 
 def get_username_by_email(email):
-    conn = db_conn()
+    conn = DbConn().connect()
     cur = conn.cursor()
     cur.execute("SELECT username FROM users WHERE email = %s", (email,))
     username = cur.fetchone()
@@ -117,7 +114,7 @@ def get_username_by_email(email):
         return username
 
 def get_password_by_email(email):
-    conn = db_conn()
+    conn = DbConn().connect()
     cur = conn.cursor()
     cur.execute("SELECT password FROM users WHERE email = %s", (email,))
     password = cur.fetchone()
@@ -128,7 +125,7 @@ def get_password_by_email(email):
         return password
     
 def get_level_by_email(email):
-    conn = db_conn()
+    conn = DbConn().connect()
     cur = conn.cursor()
     cur.execute("SELECT level FROM users WHERE email = %s", (email,))
     level = cur.fetchone()
@@ -229,7 +226,7 @@ def logout():
     return redirect(url_for('home'))
 
 def get_user_id_by_email(email):
-    conn = db_conn()
+    conn = DbConn().connect()
     cur = conn.cursor()
     cur.execute("SELECT id FROM users WHERE email = %s", (email,))
     user_id = cur.fetchone()
@@ -263,15 +260,17 @@ def submit_feedback():
         user_id = get_user_id_by_email(email)
         feedback = Feedback(user_id, feedback_data)
 
+        feedbackDAO = FeedbackDAO()
+
         if user_id is not None:
-            feedback.submit_feedback(user_id, feedback_data)
+            feedbackDAO.submit_feedback(feedback)
             flash("Message submitted successfully!", 'success')
             return redirect(url_for('contact'))
     return redirect(url_for('login'))   
 
 @app.route('/messages')
 def messages():
-    conn = db_conn()
+    conn = DbConn().connect()
     cur = conn.cursor()
     cur.execute('''SELECT * FROM messages''')
     data = cur.fetchall()
@@ -282,7 +281,7 @@ def messages():
 
 @app.route('/users')
 def index():
-    conn = db_conn()
+    conn = DbConn().connect()
     cur = conn.cursor()
     cur.execute('''SELECT * FROM users''')
     data = cur.fetchall()
@@ -319,7 +318,10 @@ def my_feedbacks():
 
         if user_id is not None:
             feedback_instance = Feedback(user_id, None)
-            feedback_data = feedback_instance.get_feedbacks_by_user_id()
+
+            feedbackDAO = FeedbackDAO()
+
+            feedback_data = feedbackDAO.get_feedbacks_by_user_id(feedback_instance)
             return render_template('my_feedbacks.html', data=feedback_data)
 
     flash('Please log in to access your feedbacks.', 'error')

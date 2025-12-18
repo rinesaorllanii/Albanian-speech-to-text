@@ -9,8 +9,9 @@ from components.dialectManagementImp import DialectManagementImpl
 from components.presentation_manager import PresentationManager
 from components.transcriptionSession import TranscriptionSession
 from components.transcriptionSessionFactory import TranscriptionSessionFactory
-from imp.userDAOImp import UserDaoImplementation
-from components.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
+from imp.feedbackDAOimp import FeedbackDaoImplementation
+from imp.userDAOimp import UserDaoImplementation
+from messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from components.feedback import Feedback
 import speech_recognition as sr
@@ -264,7 +265,7 @@ def submit_feedback():
         user_id = get_user_id_by_email(email)
         feedback = Feedback(user_id, feedback_data)
 
-        feedbackDAO = FeedbackDAO()
+        feedbackDAO = FeedbackDaoImplementation()
 
         if user_id is not None:
             feedbackDAO.submit_feedback(feedback)
@@ -306,13 +307,43 @@ def my_feedbacks():
         if user_id is not None:
             feedback_instance = Feedback(user_id, None)
 
-            feedbackDAO = FeedbackDAO()
+            feedbackDAO = FeedbackDaoImplementation()
 
             feedback_data = feedbackDAO.get_feedbacks_by_user_id(feedback_instance)
             return render_template('my_feedbacks.html', data=feedback_data)
 
     flash('Please log in to access your feedbacks.', 'error')
     return redirect(url_for('login'))
+
+@app.route('/update_feedback/<int:feedback_id>', methods=['GET', 'POST'])
+def update_feedback(feedback_id):
+    if request.method == 'POST':
+        new_feedback_data = request.form['new_feedback_data']
+
+        feedbackDAO = FeedbackDaoImplementation()
+
+        if feedbackDAO.update_feedback(feedback_id, new_feedback_data):
+            flash("Feedback updated successfully!", 'success')
+        else:
+            flash("Error updating feedback.", 'error')
+
+        return redirect(url_for('my_feedbacks'))
+
+    return render_template('update_feedback.html', feedback_id=feedback_id)
+
+@app.route('/delete_feedback', methods=['GET'])
+def delete_feedback():
+    if 'user_email' in session:
+        feedback_id = request.args.get('feedback_id')
+
+        if feedback_id:
+            feedbackDAO = FeedbackDaoImplementation()
+            feedbackDAO.delete_feedback(feedback_id)
+            flash("Feedback deleted successfully!", 'success')
+            return redirect(url_for('my_feedbacks'))
+
+    flash('Error deleting feedback.', 'error')
+    return redirect(url_for('my_feedbacks'))
 
 # dialect_manager = DialectManagementImpl()
 # transcriptionSessionFactory = TranscriptionSessionFactory()

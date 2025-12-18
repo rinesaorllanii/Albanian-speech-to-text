@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Përditëso Feedback</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="feedback-form">
+        <h1>Përditëso Feedback</h1>
+        <form method="post">
+            <label for="new_feedback_data">New Feedback Data:</label>
+            <textarea name="new_feedback_data" id="new_feedback_data" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <br>
+    {% include 'footer.html' %}
+</body>
+</html>

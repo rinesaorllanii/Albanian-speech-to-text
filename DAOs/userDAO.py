@@ -5,8 +5,6 @@ from components.level import LEVEL
 from components.user import User
 
 class UserDao(ABC):
-    def __init__(self):
-        self.db_conn = DbConn()
 
     @abstractmethod
     def add_user(self, user: User) -> bool:

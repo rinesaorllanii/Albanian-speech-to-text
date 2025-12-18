@@ -22,7 +22,7 @@ class UserDaoImplementation(UserDao):
                     return False
                 else:
                     cur.execute("INSERT INTO users(username, email, password, level) VALUES(%s, %s, %s, %s)",
-                                (user.username, user.email, user.password, user.level))
+                                (user.username, user.email, user.password, user.level,))
                     conn.commit()
                     return True
         finally:

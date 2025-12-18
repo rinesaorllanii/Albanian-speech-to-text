@@ -11,7 +11,7 @@ from components.transcriptionSession import TranscriptionSession
 from components.transcriptionSessionFactory import TranscriptionSessionFactory
 from imp.feedbackDAOimp import FeedbackDaoImplementation
 from imp.userDAOimp import UserDaoImplementation
-from messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
+from components.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from components.feedback import Feedback
 import speech_recognition as sr

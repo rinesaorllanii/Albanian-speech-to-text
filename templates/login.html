@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sq">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='validationLogin.js') }}"></script>
-    <title>Login</title>
+    <title>Hyrje</title>
 </head>
 <body>
     
@@ -21,17 +21,17 @@
     {% endwith %}
     <main>
         <div class="container">
-            <h1>Login</h1>
+            <h1>Kyçu</h1>
             <form method="POST" action="/login" class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
     
-                <label for="password">Password:</label>
+                <label for="password">Fjalëkalimi:</label>
                 <input type="password" id="password" name="password" required>
     
-                <input type="submit" value="Login">
+                <input type="submit" value="Kyçu">
     
-                <a href="/register">Don't have an account? Register here</a>
+                <a href="/register">Nuk keni një llogari? Regjistrohuni këtu</a>
             </form>
                 <br>
                 <br>

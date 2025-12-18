@@ -1,24 +1,22 @@
 <header>
     <nav>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/about">About Us</a></li>
+            <li><a href="/">AT2T</a></li>
+            <li><a href="/contact">Kontakti</a></li>
+            <li><a href="/about">Rreth nesh</a></li>
 
-            <!-- Show Log In and Register only if the user is not logged in -->
             {% if not session.user_email %}
-                <li><a href="/login">Log In</a></li>
-                <li><a href="/register">Register</a></li>
+                <li><a href="/login">Kyçu</a></li>
+                <li><a href="/register">Regjistrohu</a></li>
             {% endif %}
 
             <li class="dropdown" id="userDropdown">
-                <!-- Show user-specific options if the user is logged in -->
                 {% if session.user_email %}
                     <a href="#" class="dropbtn">Hi, {{ session.user_email }}!</a>
                     <div class="dropdown-content">
-                        <a href="/profile">Profile</a>
-                        <a href="/my_feedbacks">My Feedbacks</a>
-                        <a href="/logout">Log Out</a>
+                        <a href="/profile">Profili im</a>
+                        <a href="/my_feedbacks">Mesazhet e mija</a>
+                        <a href="/logout">Dil</a>
                     </div>
                 {% endif %}
             </li>

@@ -2,10 +2,10 @@ from abc import ABC, abstractmethod
 from datetime import time
 
 from flask import jsonify
-from components.dialect import Dialect
+from enums.dialect import Dialect
 from components.dialect_management import DialectManagement
 import speech_recognition as sr
-from components.mode import Mode
+from enums.mode import Mode
 
 class TranscriptionSession(ABC):
     # makes possible dependency injection

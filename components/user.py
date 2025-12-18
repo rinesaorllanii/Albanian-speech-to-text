@@ -1,4 +1,4 @@
-from components.level import LEVEL
+from enums.level import LEVEL
 
 
 class User:
@@ -7,4 +7,3 @@ class User:
         self.email = email
         self.password = password
         self.level = level
-        

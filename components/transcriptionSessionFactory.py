@@ -1,5 +1,5 @@
 from components.dialect_management import DialectManagement
-from components.mode import Mode
+from enums.mode import Mode
 from components.singleSession import SingleSession
 from components.collaborationSession import CollaborationSession
 

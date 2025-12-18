@@ -1,8 +1,8 @@
 from datetime import time
 
 from flask import flash
-from components.dialect import Dialect
-from components.mode import Mode
+from enums.dialect import Dialect
+from enums.mode import Mode
 from components.transcriptionSession import TranscriptionSession
 from components.dialect_management import DialectManagement
 import speech_recognition as sr

@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from flask import flash
 import speech_recognition as sr
 
-from components.dialect import Dialect
+from enums.dialect import Dialect
 from components.dialect_management import DialectManagement
 
 class DialectManagementImpl(DialectManagement):

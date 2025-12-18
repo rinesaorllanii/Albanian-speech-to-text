@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from passlib.hash import sha1_crypt
 from components.dbconn import DbConn
-from components.level import LEVEL
+from enums.level import LEVEL
 from components.user import User
 
 class UserDao(ABC):

@@ -6,7 +6,7 @@ from DAOs.feedbackDAO import FeedbackDAO
 from DAOs.userDAO import UserDao
 from components.dbconn import DbConn
 from components.presentation_manager import PresentationManager
-from components.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
+from messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from components.feedback import Feedback
 import speech_recognition as sr
@@ -294,20 +294,20 @@ recognizer = sr.Recognizer()
 
 @app.route('/transcription', methods=['GET', 'POST'])
 def transcription():
-    global recognizer
-    if request.method == 'POST':
-        if 'audio' in request.files:
-            audio_data = request.files['audio'].read()
-            try:
-                with sr.AudioFile(audio_data) as source:
-                    audio_text = recognizer.recognize_google(source)
-                return jsonify({'transcription': audio_text})
-            except sr.UnknownValueError:
-                return jsonify({'error': 'Speech Recognition could not understand the audio'})
-            except sr.RequestError as e:
-                return jsonify({'error': f"Could not request results from Google Speech Recognition service; {e}"})
-        else:
-            return jsonify({'error': 'No audio file provided'})
+    # global recognizer
+    # if request.method == 'POST':
+    #     if 'audio' in request.files:
+    #         audio_data = request.files['audio'].read()
+    #         try:
+    #             with sr.AudioFile(audio_data) as source:
+    #                 audio_text = recognizer.recognize_google(source)
+    #             return jsonify({'transcription': audio_text})
+    #         except sr.UnknownValueError:
+    #             return jsonify({'error': 'Speech Recognition could not understand the audio'})
+    #         except sr.RequestError as e:
+    #             return jsonify({'error': f"Could not request results from Google Speech Recognition service; {e}"})
+    #     else:
+    #         return jsonify({'error': 'No audio file provided'})
     return render_template('transcription.html')
 
 @app.route('/my_feedbacks')

@@ -1,16 +1,13 @@
 import psycopg2
 import secrets
-from flask import Flask, render_template, request, redirect, url_for, session 
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from passlib.hash import sha1_crypt
-from components.userDAO import UserDao
-from components.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
+from DAOs.userDAO import UserDao
+from component.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
-from flask import flash
 from components.feedback import Feedback
 from components.presentation_manager import PresentationManager
-from components.mode import Mode
 import speech_recognition as sr
-from flask import jsonify
 
 
 app = Flask(__name__)
@@ -53,7 +50,6 @@ def profile():
         if user_data:
             return render_template('profile.html', user_data=user_data)
     
-    # Redirect to login if the user is not logged in
     flash('Please log in to access your profile.', 'error')
     return redirect(url_for('login'))
 
@@ -87,10 +83,10 @@ def validate_login(email, password):
     conn.close()
 
     if user_data:
-        stored_hash = user_data[3]  # Assuming the hash is stored in the 4th column, adjust as needed
+        stored_hash = user_data[3] 
         if sha1_crypt.verify(password, stored_hash):
-            return True  # Password is correct
-    return False  # Invalid email or password
+            return True  
+    return False  
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_user():
@@ -98,16 +94,13 @@ def login_user():
         email = request.form['email']
         password = request.form['password']
 
-        # Validate login credentials
         if validate_login(email, password):
-            # Set the user as logged in (you can use a session or other authentication mechanisms)
             session['user_email'] = email
             flash(LOGIN_SUCCESS, 'success')
 
             return render_template('index.html')
         
         flash(LOGIN_FAIL, 'error')
-        # If login fails, you can render an error message or redirect back to the login page
         return render_template('login.html', error='Invalid email or password')
         
     return render_template('login.html')
@@ -145,6 +138,30 @@ def get_level_by_email(email):
     if level:
         return level
 
+# @app.route('/update_email', methods=['POST'])
+# def update_email():
+#     if 'user_email' in session:
+#         current_email = session['user_email']
+#         new_email = request.form['new_email']
+
+#         if not new_email:
+#             flash('New email cannot be empty.', 'error')
+#             return redirect(url_for('profile'))
+
+#         # Create an instance of the User class
+#         user = User(username=get_username_by_email(current_email), email=current_email, password=get_username_by_email(current_email), level=get_level_by_email(current_email))
+    
+#         # Call the updateEmail method
+#         if user.updateEmail(new_email):
+#             flash('Email updated successfully.', 'success')
+#         else:
+#             flash('Error updating email.', 'error')
+
+#         return redirect(url_for('profile'))
+
+#     flash('Please log in to access your profile.', 'error')
+#     return render_template('profile.html')
+
 @app.route('/update_email', methods=['POST'])
 def update_email():
     if 'user_email' in session:
@@ -155,11 +172,10 @@ def update_email():
             flash('New email cannot be empty.', 'error')
             return redirect(url_for('profile'))
 
-        # Create an instance of UserDao
         user_dao = UserDao()
-        # Call the update_email method
         if user_dao.update_email(User(email=current_email), new_email):
             flash('Email updated successfully.', 'success')
+            return redirect(url_for('logout'))
         else:
             flash('Error updating email.', 'error')
 
@@ -178,15 +194,14 @@ def update_password():
             flash('New password cannot be empty.', 'error')
             return redirect(url_for('profile'))
 
-        # Create an instance of the User class
         user_dao = UserDao()    
-        # Call the updateEmail method
         if user_dao.reset_password(User(email=current_email), new_password):
             flash('Password updated successfully.', 'success')
+            return redirect(url_for('logout'))
         else:
             flash('Error updating password.', 'error')
 
-        return redirect(url_for('login'))
+        return redirect(url_for('profile'))
 
     flash('Please log in to access your profile.', 'error')
     return render_template('profile.html')
@@ -233,10 +248,8 @@ def delete_account():
 
 @app.route('/logout')
 def logout():
-    # Clear the user session data
     session.pop('user_email', None)
 
-    # Redirect to the home page or any desired route after logout
     return redirect(url_for('home'))
 
 def get_user_id_by_email(email):
@@ -248,7 +261,7 @@ def get_user_id_by_email(email):
     conn.close()
 
     if user_id:
-        return user_id[0]  # Assuming user_id is the first column, adjust as needed
+        return user_id[0]  
 
     return None
 
@@ -321,21 +334,6 @@ def transcription():
         else:
             return jsonify({'error': 'No audio file provided'})
     return render_template('transcription.html')
-
-@app.route('/my_feedbacks')
-def my_feedbacks():
-    if 'user_email' in session:
-        email = session['user_email']
-        user_id = get_user_id_by_email(email)
-
-        if user_id is not None:
-            feedback_instance = Feedback(user_id, None)
-            feedback_data = feedback_instance.get_feedbacks_by_user_id()
-            return render_template('my_feedbacks.html', data=feedback_data)
-
-    flash('Please log in to access your feedbacks.', 'error')
-    return redirect(url_for('login'))
-
 
  
 if __name__ == '__main__':

@@ -12,7 +12,6 @@ header {
     box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.1);
 }
 
-
 nav ul {
     list-style-type: none;
     margin: 0;
@@ -32,10 +31,6 @@ nav ul li a {
     font-size: 16px;
 }
 
-/* nav ul li a:hover {
-    text-decoration: underline;
-} */
-
 .container {
     display: flex;
     flex-direction: column;
@@ -43,20 +38,15 @@ nav ul li a {
 }
 
 .profile {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
-}
-
-.profile p{
-    margin-left:0%
 }
 
 .profile p,
 input,
 select {
     margin-right: 40px;
-    font-size: 18px;
 }
 
 form {
@@ -77,36 +67,13 @@ form {
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
 
-.profile-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 190px;
-    margin-right: 190px;
-}
-
-.profile-section pstrong{
-    text-align: left;
-}
-
-.profile-delete {
-    margin-left: 180px;
-    margin-right: 180px;
-    text-align: center;
-}
-
-.profile-delete button{
-    background-color: rgb(156, 37, 37);
-}
-
 .update {
     background-color: #fff;
-    padding-inline: 80px;
+    padding: 20px;
     border-radius: 5px;
-    min-width: 700px;
+    max-width: 500px;
     margin: 10px auto;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    font-size: 18px;
 }
 
 input[type="email"],
@@ -121,13 +88,6 @@ select {
     border: 2px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-}
-
-
-.profile button,
-.profile-delete button,
-.update button {
-    white-space: nowrap; /* Prevent text from wrapping to the next line */
 }
 
 input[type="submit"],
@@ -166,6 +126,7 @@ a:hover,
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     margin-bottom: 30px;
 }
+
 #hero button a{
     color: white;
     text-decoration: none;
@@ -192,7 +153,6 @@ a:hover,
 
 #contact {
     background-color: #f0f0f0;
-    /* padding: 50px 0; */
     text-align: center;
 }
 
@@ -212,16 +172,6 @@ a:hover,
     margin-bottom: 10px;
 }
 
-#contact button {
-    background-color: #7eb5ad;
-    color: #fff;
-    padding: 14px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
 #contact button:hover {
     background-color: #7eb5ad;
 }
@@ -234,7 +184,6 @@ a:hover,
     color: #333;
     text-align: center;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    /* padding: 50px 0; */
 }
 
 #features,
@@ -301,14 +250,12 @@ button:hover {
     background-color: hsl(171, 27%, 60%);
 }
 
-/* Dropdown Button */
 .dropbtn {
     color: white;
     padding: 10px;
     text-decoration: none;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -318,7 +265,6 @@ button:hover {
     z-index: 1;
 }
 
-/* Links inside the dropdown */
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -326,12 +272,10 @@ button:hover {
     display: block;
 }
 
-/* Change color on hover */
 .dropdown-content a:hover {
     background-color: #f1f1f1;
 }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -340,10 +284,9 @@ button:hover {
     text-align: center;
 }
 
-/* Style for the table */
 table {
     width: 80%;
-    margin: 20px auto; /* Center the table */
+    margin: 20px auto;
     border-collapse: collapse;
 }
 
@@ -459,27 +402,28 @@ th {
 }
 
 .action-form {
-    display: inline-block; /* Ensure forms appear next to each other */
-    margin: 0; /* Remove default margin */
-}
-input[type="submit"]
-.action-button {
-    padding: 8px 12px; /* Adjust padding to your liking */
-    font-size: 14px; /* Adjust font size */
-    background-color: #3498db; /* Set background color */
-    color: #fff; /* Set text color */
-    border: none; /* Remove border */
-    cursor: pointer; /* Add pointer cursor on hover */
-    border-radius: 4px; /* Optional: Add border-radius for rounded corners */
-}
-input[type="submit"]
-.action-button:hover {
-    background-color: #2980b9; /* Change background color on hover */
+    display: inline-block; 
+    margin: 0; 
 }
 
-/* Make the form invisible */
+input[type="submit"]
+.action-button {
+    padding: 8px 12px;
+    font-size: 14px; 
+    background-color: #3498db; 
+    color: #fff;
+    border: none; 
+    cursor: pointer; 
+    border-radius: 4px; 
+}
+
+input[type="submit"]
+.action-button:hover {
+    background-color: #2980b9; 
+}
+
 .action-form {
-    border: none; /* Remove form border */
+    border: none;
     padding: 0; 
     background: none; 
 }

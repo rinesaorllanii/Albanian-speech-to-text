@@ -26,6 +26,8 @@
             <textarea id="transcription" placeholder="Transcription will appear here..." readonly></textarea>
             <div id="transcription-buttons">
                 <button id="start-transcription">Start</button>
+                <button id="pause-transcription">Pause</button>
+                <button id="pause-transcription">Resume</button>
                 <button id="end-transcription" disabled>End</button>
                 <button id="save-transcription" disabled>Save Transcription</button>
             </div>
@@ -67,6 +69,10 @@
             document.getElementById('end-transcription').disabled = false;
             document.getElementById('save-transcription').disabled = true;
             document.getElementById('transcription').value = 'Listening...';
+        });
+
+        document.getElementById('pause-transcription').addEventListener('click', function () {
+            recognition.pause();
         });
 
         document.getElementById('end-transcription').addEventListener('click', function () {

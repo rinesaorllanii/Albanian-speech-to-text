@@ -263,7 +263,7 @@ button {
 }
 
 button:hover {
-    background-color: #7eb5ad;
+    background-color: hsl(171, 27%, 60%);
 }
 
 /* Dropdown Button */
@@ -321,6 +321,108 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+#transcription-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#transcription-area {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 80%;
+    max-width: 600px;
+    margin: 20px;
+}
+
+#upload-area {
+    padding: 20px;
+    text-align: center;
+}
+
+#upload-area label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#upload-area input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+#transcription-area textarea {
+    resize: none;
+    width: calc(100% - 40px);
+    height: 300px;
+    padding: 20px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin: 10px 20px;
+}
+
+#transcription-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#transcription-buttons button {
+    background-color: #2e3130;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#transcription-buttons button:disabled {
+    background-color: #2e3130;
+    cursor: not-allowed;
+}
+
+#transcription-buttons button:hover {
+    background-color: hsl(171, 27%, 60%);
+}
+
+#transcription-status {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+#transcription-status p {
+    margin: 5px 0;
+}
+
+#info-area {
+    width: 80%;
+    max-width: 600px;
+    margin: 50px;
+    box-sizing: border-box;
+}
+
+#info-area h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: hsl(171, 27%, 60%);
+}
+
+#info-area p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
 .action-form {
     display: inline-block; /* Ensure forms appear next to each other */
     margin: 0; /* Remove default margin */
@@ -343,6 +445,6 @@ input[type="submit"]
 /* Make the form invisible */
 .action-form {
     border: none; /* Remove form border */
-    padding: 0; /* Remove form padding */
-    background: none; /* Make form background transparent */
+    padding: 0; 
+    background: none; 
 }

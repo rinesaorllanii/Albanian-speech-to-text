@@ -6,6 +6,8 @@ from messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from flask import flash
 from components.feedback import Feedback
+import speech_recognition as sr
+from flask import jsonify
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -298,6 +300,28 @@ def index():
     cur.close()
     conn.close()
     return render_template('users.html', data = data)
+
+
+recognizer = sr.Recognizer()
+
+@app.route('/transcription', methods=['GET', 'POST'])
+def transcription():
+    global recognizer
+    if request.method == 'POST':
+        if 'audio' in request.files:
+            audio_data = request.files['audio'].read()
+            try:
+                with sr.AudioFile(audio_data) as source:
+                    audio_text = recognizer.recognize_google(source)
+                return jsonify({'transcription': audio_text})
+            except sr.UnknownValueError:
+                return jsonify({'error': 'Speech Recognition could not understand the audio'})
+            except sr.RequestError as e:
+                return jsonify({'error': f"Could not request results from Google Speech Recognition service; {e}"})
+        else:
+            return jsonify({'error': 'No audio file provided'})
+    return render_template('transcription.html')
+
  
 if __name__ == '__main__':
     app.run(debug=True)

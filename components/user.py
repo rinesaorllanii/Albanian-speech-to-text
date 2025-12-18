@@ -1,4 +1,3 @@
-
 from flask import flash
 import psycopg2
 from passlib.hash import sha1_crypt

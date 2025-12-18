@@ -2,7 +2,7 @@ import psycopg2
 import secrets
 from flask import Flask, render_template, request, redirect, url_for, session
 from passlib.hash import sha1_crypt
-from components.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
+from messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from flask import flash
 
@@ -94,6 +94,14 @@ def createUser():
     
     flash(REGISTER_FAIL, 'error')
     return render_template('register.html')
+
+@app.route('/logout')
+def logout():
+    # Clear the user session data
+    session.pop('user_email', None)
+
+    # Redirect to the home page or any desired route after logout
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

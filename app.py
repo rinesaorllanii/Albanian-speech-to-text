@@ -5,6 +5,7 @@ from passlib.hash import sha1_crypt
 from components.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from flask import flash
+from components.feedback import Feedback
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -207,8 +208,54 @@ def update_level():
     flash('Please log in to access your profile.', 'error')
     return render_template('profile.html')
 
+@app.route('/logout')
+def logout():
+    # Clear the user session data
+    session.pop('user_email', None)
 
+    # Redirect to the home page or any desired route after logout
+    return redirect(url_for('home'))
 
+def get_user_id_by_email(email):
+    conn = db_conn()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM users WHERE email = %s", (email,))
+    user_id = cur.fetchone()
+    cur.close()
+    conn.close()
+
+    if user_id:
+        return user_id[0]  # Assuming user_id is the first column, adjust as needed
+
+    return None
+
+def index():
+    if request.method == 'POST':
+        if 'user_email' in session:
+            email = session['user_email']
+            feedback_data = request.form['message']
+            user_id = get_user_id_by_email(email)
+            feedback = Feedback(user_id, feedback_data)
+
+            if user_id is not None:
+                feedback.submit_feedback(user_id, feedback_data)
+                flash("Message submitted successfully!", 'success')
+                return redirect(url_for('index'))
+    return redirect(url_for('index'))
+                    
+@app.route('/submit_contact', methods=['POST'])
+def submit_feedback():
+    if 'user_email' in session:
+        email = session['user_email']
+        feedback_data = request.form['message']
+        user_id = get_user_id_by_email(email)
+        feedback = Feedback(user_id, feedback_data)
+
+        if user_id is not None:
+            feedback.submit_feedback(user_id, feedback_data)
+            flash("Message submitted successfully!", 'success')
+            return redirect(url_for('contact'))
+    return redirect(url_for('contact'))
 
 @app.route('/')
 def index():

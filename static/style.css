@@ -42,12 +42,42 @@ nav ul li a {
     align-items: center;
 }
 
+.profile {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.profile p,
+input,
+select {
+    margin-right: 40px;
+}
+
 form {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     max-width: 400px;
     margin: 50px auto;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+#profile {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    margin: 50px auto;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.update {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    margin: 10px auto;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
 
@@ -234,39 +264,4 @@ button {
 
 button:hover {
     background-color: #7eb5ad;
-}
-
-/* Dropdown Button */
-.dropbtn {
-    color: white;
-    padding: 10px;
-    text-decoration: none;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-/* Change color on hover */
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
 }

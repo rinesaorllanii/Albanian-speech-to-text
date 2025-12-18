@@ -28,3 +28,4 @@ class TranscriptionSessionFactory: #Simple Factory
     def _get_session_type(is_admin, is_user):
         # Lazy loading
         return TranscriptionSessionFactory.session_creation_map.get((is_admin, is_user), None)
+

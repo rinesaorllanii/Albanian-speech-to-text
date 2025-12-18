@@ -17,3 +17,4 @@ class ApplicationManager:
             pass
 
         return Mode.OFFLINE       
+

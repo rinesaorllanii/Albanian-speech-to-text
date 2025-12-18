@@ -16,6 +16,7 @@ class UserDao(ABC):
     def reset_password(self, user: User, new_password: str) -> bool:
         pass
 
+    @abstractmethod
     def update_security_level(self, user: User, new_level: LEVEL) -> bool:
         pass
 
@@ -26,3 +27,4 @@ class UserDao(ABC):
     @abstractmethod
     def get_user_details(self, user: User) -> User:
         pass
+

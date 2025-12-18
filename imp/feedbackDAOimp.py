@@ -10,7 +10,7 @@ class FeedbackDaoImplementation(FeedbackDAO):
 
         try:
             with conn.cursor() as cur:
-                cur.execute("INSERT INTO messages (user_id, feedback_data, submission_date) VALUES (%s, %s, CURRENT_TIMESTAMP)",
+                cur.execute("INSERT INTO feedback (user_id, feedback_data, submission_date) VALUES (%s, %s, CURRENT_TIMESTAMP)",
                             (feedback.user_id, feedback.feedback_data,))
                 conn.commit()
         finally:
@@ -21,7 +21,7 @@ class FeedbackDaoImplementation(FeedbackDAO):
 
         try:
             with conn.cursor() as cur:
-                cur.execute("SELECT * FROM messages WHERE user_id = %s", (feedback.user_id,))
+                cur.execute("SELECT * FROM feedback WHERE user_id = %s", (feedback.user_id,))
                 data = cur.fetchall()
         finally:
             conn.close()
@@ -33,7 +33,7 @@ class FeedbackDaoImplementation(FeedbackDAO):
 
         try:
             with conn.cursor() as cur:
-                cur.execute("UPDATE messages SET feedback_data = %s WHERE feedback_id = %s", (feedback_data, feedback_id,))
+                cur.execute("UPDATE feedback SET feedback_data = %s WHERE id = %s", (feedback_data, feedback_id,))
                 conn.commit()
         finally:
             conn.close()
@@ -43,7 +43,7 @@ class FeedbackDaoImplementation(FeedbackDAO):
 
         try:
             with conn.cursor() as cur:
-                cur.execute("DELETE FROM messages WHERE feedback_id = %s", (feedback_id,))
+                cur.execute("DELETE FROM feedback WHERE id = %s", (feedback_id,))
                 conn.commit()
         finally:
             conn.close()

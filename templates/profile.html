@@ -21,24 +21,24 @@
         <h2>Përditëso Profilin</h2>
         <form class="update">
             <div class="profile-section">
-                <p><strong>Emri i përdoruesit:</strong> {{ user_data[1] }}</p> 
+                <p><strong>Emri i përdoruesit:</strong> {{ user_data[0] }}</p> 
             </div>
         </form>
         <form action="{{ url_for('update_email') }}" method="POST" class="update">
             <div class="profile">
-                <p><strong>Email:</strong> {{ user_data[2] }}</p>
+                <p><strong>Email:</strong> {{ user_data[1] }}</p>
                 <input type="email" name="new_email" id="new_email" placeholder="Vendosni email-in e ri">
                 <button type="submit" onclick="return confirm('A jeni i sigurt se dëshironi të përditësoni email-in?')">Përditëso email-in</button>
             </div>
         </form>
         <form action="{{ url_for('update_level') }}" method="POST" class="update">
             <div class="profile">
-                <p><strong>Niveli i Sigurisë:</strong>  {{ user_data[4] }}</p>
-                <select id="new_level" name="new_level">
-                    <option value="LOW">LOW</option>
-                    <option value="MEDIUM">MEDIUM</option>
-                    <option value="HIGH">HIGH</option>
-                </select>
+                <p><strong>Niveli i Sigurisë:</strong>  {{ user_data[2] }}</p>
+                    <select id="new_level" name="new_level">
+                        <option value="LOW" {% if user_data[2] == 'LOW' %}selected{% endif %}>LOW</option>
+                        <option value="MEDIUM" {% if user_data[2] == 'MEDIUM' %}selected{% endif %}>MEDIUM</option>
+                        <option value="HIGH" {% if user_data[2] == 'HIGH' %}selected{% endif %}>HIGH</option>
+                    </select>                
                 <button type="submit" onclick="return confirm('A jeni i sigurt se dëshironi të përditësoni nivelin e sigurisë?')">Përditëso Nivelin e Sigurisë</button>
             </div>
         </form>

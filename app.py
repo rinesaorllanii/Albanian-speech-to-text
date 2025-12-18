@@ -11,7 +11,7 @@ from components.transcriptionSession import TranscriptionSession
 from components.transcriptionSessionFactory import TranscriptionSessionFactory
 from imp.feedbackDAOimp import FeedbackDaoImplementation
 from imp.userDAOimp import UserDaoImplementation
-from components.messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
+from messages import LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL
 from components.user import User
 from components.feedback import Feedback
 import speech_recognition as sr
@@ -48,7 +48,10 @@ def profile():
         email = session['user_email']
         conn = DbConn().connect()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM users WHERE email = %s", (email,))
+        cur.execute(
+    "SELECT username, email, level, created_at FROM users WHERE email = %s",
+    (email,)
+)
         user_data = cur.fetchone()
         cur.close()
         conn.close()
@@ -79,15 +82,18 @@ def createUser():
 def validate_login(email, password):
     conn = DbConn().connect()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM users WHERE email = %s", (email,))
-    user_data = cur.fetchone()
+    cur.execute(
+        "SELECT password FROM users WHERE email = %s",
+        (email,)
+    )
+    row = cur.fetchone()
     cur.close()
     conn.close()
 
-    if user_data:
-        stored_hash = user_data[3] 
+    if row:
+        stored_hash = row[0]
         if sha1_crypt.verify(password, stored_hash):
-            return True  
+            return True
     return False  
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -121,7 +127,7 @@ def get_username_by_email(email):
 def get_password_by_email(email):
     conn = DbConn().connect()
     cur = conn.cursor()
-    cur.execute("SELECT password FROM users WHERE email = %s", (email,))
+    cur.execute("SELECT password_hash FROM users WHERE email = %s", (email,))
     password = cur.fetchone()
     cur.close()
     conn.close()
@@ -198,6 +204,7 @@ def update_level():
 
         if userDAO.update_security_level(User(email=current_email), new_level):
             flash('Level updated successfully.', 'success')
+            return redirect(url_for('logout'))
         else:
             flash('Error updating level.', 'error')
 

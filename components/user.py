@@ -67,3 +67,27 @@ class User:
                 return True
         finally:
             conn.close()
+
+    def deleteAccount(self):
+        conn = self.db_conn.connect()
+
+        try:
+            with conn.cursor() as cur:
+                # Get the user ID
+                cur.execute("SELECT id FROM users WHERE email = %s", (self.email,))
+                user_id = cur.fetchone()
+
+                if user_id:
+                    user_id = user_id[0]
+                    # Delete user messages
+                    cur.execute("DELETE FROM messages WHERE user_id = %s", (user_id,))
+
+                    # Delete user
+                    cur.execute("DELETE FROM users WHERE email = %s", (self.email,))
+                    
+                    conn.commit()
+                    return True
+                else:
+                    return False
+        finally:
+            conn.close()

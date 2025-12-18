@@ -43,15 +43,20 @@ nav ul li a {
 }
 
 .profile {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     display: flex;
     align-items: center;
+}
+
+.profile p{
+    margin-left:0%
 }
 
 .profile p,
 input,
 select {
     margin-right: 40px;
+    font-size: 18px;
 }
 
 form {
@@ -72,13 +77,36 @@ form {
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
 
+.profile-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 190px;
+    margin-right: 190px;
+}
+
+.profile-section pstrong{
+    text-align: left;
+}
+
+.profile-delete {
+    margin-left: 180px;
+    margin-right: 180px;
+    text-align: center;
+}
+
+.profile-delete button{
+    background-color: rgb(156, 37, 37);
+}
+
 .update {
     background-color: #fff;
-    padding: 20px;
+    padding-inline: 80px;
     border-radius: 5px;
-    max-width: 500px;
+    min-width: 700px;
     margin: 10px auto;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    font-size: 18px;
 }
 
 input[type="email"],
@@ -93,6 +121,13 @@ select {
     border: 2px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+}
+
+
+.profile button,
+.profile-delete button,
+.update button {
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
 }
 
 input[type="submit"],

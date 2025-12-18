@@ -12,8 +12,11 @@
         <div id="hero">
             <h1>Albanian Speech to Text</h1>
             <h3>Convert Albanian speech to text with ease</h3>
-            <!-- <h3><a href="/login">Get Started</a></h3> -->
-            <button><a href="/login">Get Started</a></button>
+                {% if not session.user_email %}
+                    <button><a href="/login">Get Started</a></button>
+                {% else %}
+                    <button><a href="/transcription">Get Started</a></button>
+                {% endif %}
         </div>
         <section id="features">
             <h1>Why Choose Albanian Speech to Text?</h1>
@@ -36,7 +39,7 @@
             <h2>Get in Touch</h2>
             <form action="/submit_contact" method="post">
                 <label for="message">Message:</label>
-                <textarea id="message" name="message"></textarea>
+                <textarea id="message" name="message" rows="4" required></textarea>
                 <button type="submit" class="cta-button">Send Message</button>
             </form>
         </section>
